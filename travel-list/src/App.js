@@ -80,7 +80,15 @@ function Form() {
 }
 
 function PackingList() {
-  return <div className="list">LIST</div>;
+  return (
+    <div className="list">
+      <ul>
+        {initialItems.map((item) => (
+          <Item item={item} key={item.id} />
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 function Stats() {
@@ -88,5 +96,21 @@ function Stats() {
     <footer className="stats">
       <em>You have X items on your list, an you already packed X(X%)</em>
     </footer>
+  );
+}
+
+function Item({ item, onDeleteItem, onToggleItem }) {
+  return (
+    <li>
+      <input
+        type="checkbox"
+        value={item.packed}
+        onChange={() => onToggleItem(item.id)}
+      />
+      <span style={item.packed ? { textDecoration: "line-through" } : {}}>
+        {item.quantity} {item.description}
+      </span>
+      <button onClick={() => onDeleteItem(item.id)}>❎</button>
+    </li>
   );
 }
